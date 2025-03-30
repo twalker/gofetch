@@ -1,2 +1,3 @@
 # gofetch
-learning bare bones rest api with go
+
+Project to learn a bare bones rest api with preference to standard library.
