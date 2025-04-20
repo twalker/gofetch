@@ -26,20 +26,14 @@ func (app *application) correlationIDMiddleware(next http.Handler) http.Handler 
 			newUUID, err := uuid.NewRandom()
 			if err != nil {
 				app.logger.Error(fmt.Sprintf("failed to generate UUID for correlationID: %v", err))
-			} else {
-				id = newUUID.String()
-				r.Header.Set(correlationIDHeader, id)
 			}
+			id = newUUID.String()
 		}
 
-		if id != "" {
-			w.Header().Set(correlationIDHeader, id)
-		}
+		w.Header().Set(correlationIDHeader, id)
 
 		ctx := r.Context()
-		if id != "" {
-			ctx = context.WithValue(ctx, correlationIDKey, id)
-		}
+		ctx = context.WithValue(ctx, correlationIDKey, id)
 		r = r.WithContext(ctx)
 
 		next.ServeHTTP(w, r)
