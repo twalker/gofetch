@@ -38,8 +38,8 @@ func main() {
 		config: cfg,
 		logger: logger,
 	}
-
-	err := app.serve()
+	mux := app.registerRoutes()
+	err := app.serve(mux)
 	if err != nil {
 		logger.Error(err.Error())
 		os.Exit(1)
