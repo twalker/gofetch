@@ -5,8 +5,6 @@ import (
 	"log/slog"
 	"os"
 	"sync"
-
-	"gofetch.timwalker.dev/internal/vcs"
 )
 
 type config struct {
@@ -19,8 +17,6 @@ type application struct {
 	logger *slog.Logger
 	wg     sync.WaitGroup
 }
-
-var version = vcs.Version()
 
 func main() {
 	var cfg config
