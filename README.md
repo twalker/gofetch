@@ -12,7 +12,7 @@ TODO:
 - [ ] `GET /version` route
 - [ ] `GET/HEAD /healthz` route
 - [ ] `GET /hello-api-call` route
-- [ ] Add Air for hot reloading
+- [x] Add Air for hot reloading
 - [ ] Add dotenv to use environment variables instead of cli opts
 - [x] Tests for middleware
 - [x] Tests for routes
