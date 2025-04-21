@@ -8,19 +8,20 @@ import (
 	"github.com/google/uuid"
 )
 
+// correlationIDHeaderKey is the custome http header name for correlation ids.
+const correlationIDHeaderKey = "x-correlation-id"
+
 // contextKey is a custom type used for context keys to avoid collisions.
 type contextKey string
 
-const correlationIDHeader = "x-correlation-id"
-
-// correlationIDKey is the key used to store the correlation ID in the context.
-const correlationIDKey contextKey = "correlationID"
+// correlationIDContextKey is the key used to store the correlation ID in the context.
+const correlationIDContextKey contextKey = "correlationID"
 
 // correlationIDMiddleware generates or retrieves a request ID (UUID v4)
 // and adds it to the request header, response header, and request context.
 func (app *application) correlationIDMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		id := r.Header.Get(correlationIDHeader)
+		id := r.Header.Get(correlationIDHeaderKey)
 
 		if id == "" {
 			newUUID, err := uuid.NewRandom()
@@ -30,10 +31,10 @@ func (app *application) correlationIDMiddleware(next http.Handler) http.Handler 
 			id = newUUID.String()
 		}
 
-		w.Header().Set(correlationIDHeader, id)
+		w.Header().Set(correlationIDHeaderKey, id)
 
 		ctx := r.Context()
-		ctx = context.WithValue(ctx, correlationIDKey, id)
+		ctx = context.WithValue(ctx, correlationIDContextKey, id)
 		r = r.WithContext(ctx)
 
 		next.ServeHTTP(w, r)
@@ -42,7 +43,7 @@ func (app *application) correlationIDMiddleware(next http.Handler) http.Handler 
 
 // getCorrelationID retrieves the request ID from the context.
 func (app *application) getCorrelationID(ctx context.Context) string {
-	if id, ok := ctx.Value(correlationIDKey).(string); ok {
+	if id, ok := ctx.Value(correlationIDContextKey).(string); ok {
 		return id
 	}
 	return ""

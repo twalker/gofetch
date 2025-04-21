@@ -28,7 +28,7 @@ func TestCorrelationIDMiddleware(t *testing.T) {
 
 		nextHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			handlerCalled = true
-			handlerIDHeader = w.Header().Get(correlationIDHeader)
+			handlerIDHeader = w.Header().Get(correlationIDHeaderKey)
 			handlerIDContext = app.getCorrelationID(r.Context())
 			w.WriteHeader(http.StatusOK)
 		})
@@ -40,13 +40,13 @@ func TestCorrelationIDMiddleware(t *testing.T) {
 		}
 
 		if handlerIDHeader == "" {
-			t.Errorf("Middleware failed to set '%s' header in response for next handler", correlationIDHeader)
+			t.Errorf("Middleware failed to set '%s' header in response for next handler", correlationIDHeaderKey)
 		}
 		if handlerIDContext == "" {
-			t.Errorf("Middleware failed to set '%s' in context for next handler", correlationIDKey)
+			t.Errorf("Middleware failed to set '%s' in context for next handler", correlationIDContextKey)
 		}
 		if !isValidUUID(handlerIDContext) {
-			t.Errorf("Expected context key '%s' ('%s') to be a valid UUID, but it was not", correlationIDKey, handlerIDContext)
+			t.Errorf("Expected context key '%s' ('%s') to be a valid UUID, but it was not", correlationIDContextKey, handlerIDContext)
 		}
 		if status := rr.Code; status != http.StatusOK {
 			t.Errorf("Handler returned wrong status code: got %v want %v", status, http.StatusAccepted)
@@ -60,7 +60,7 @@ func TestCorrelationIDMiddleware(t *testing.T) {
 			t.Fatal(err)
 		}
 		existingID := "my-predefined-request-id-123"
-		req.Header.Set(correlationIDHeader, existingID)
+		req.Header.Set(correlationIDHeaderKey, existingID)
 		var handlerIDHeader string
 		var handlerIDContext string
 		var handlerCalled bool
@@ -68,7 +68,7 @@ func TestCorrelationIDMiddleware(t *testing.T) {
 
 		nextHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			handlerCalled = true
-			handlerIDHeader = w.Header().Get(correlationIDHeader)
+			handlerIDHeader = w.Header().Get(correlationIDHeaderKey)
 			handlerIDContext = app.getCorrelationID(r.Context())
 			w.WriteHeader(http.StatusOK)
 		})
