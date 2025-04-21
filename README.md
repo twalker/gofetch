@@ -8,7 +8,7 @@ TODO:
 - [ ] Server start with configurable port
 - [ ] Logging middleware
 - [ ] Panic recovery middleware
-- [ ] Request ID middleware
+- [x] Request ID middleware
 - [ ] `/version` route
 - [ ] `/healthz` route
 - [ ] `/hello-api-call` route
