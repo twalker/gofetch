@@ -27,10 +27,14 @@ make run/api
 - [x] Server start with configurable port (switch to .env)
 - [x] Logger
 - [ ] Panic recovery middleware
+- [ ] CORS middleware
 - [x] Request ID middleware
 - [ ] `GET /version` route
 - [ ] `GET/HEAD /healthz` route
 - [ ] `GET /hello-api-call` route
+- [ ] Handle 404
+- [ ] Default to "application/json" responses
+- [ ] Standardize error responses
 - [x] Add Air for hot reloading
 - [x] Add dotenv to use environment variables instead of cli opts
 - [x] Tests for middleware
