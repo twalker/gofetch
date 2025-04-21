@@ -2,8 +2,16 @@
 
 Project to learn a bare bones rest api with preference to standard library.
 
+## Getting started
 
-TODO:
+1. [Install go](https://go.dev/doc/install)
+2. run `make build/api` or `make run/api` --dependencies will be downloaded automatically.
+
+```sh
+make run/api
+```
+
+## TODO:
 
 - [ ] Server start with configurable port (switch to .env)
 - [x] Logger
