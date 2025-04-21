@@ -1,10 +1,13 @@
 package main
 
 import (
-	"flag"
+	"log"
 	"log/slog"
 	"os"
+	"strconv"
 	"sync"
+
+	_ "github.com/joho/godotenv/autoload"
 )
 
 type config struct {
@@ -19,12 +22,19 @@ type application struct {
 }
 
 func main() {
-	var cfg config
+	port, err := strconv.Atoi(os.Getenv("PORT"))
+	if err != nil {
+		log.Fatalf("Error reading PORT from environment variable: %v", err)
+	}
 
-	flag.IntVar(&cfg.port, "port", 4000, "API server port")
-	flag.StringVar(&cfg.env, "env", "development", "Environment (development|staging|production)")
-
-	flag.Parse()
+	env := os.Getenv("ENV")
+	if env == "" {
+		env = "local"
+	}
+	cfg := config{
+		port: port,
+		env:  env,
+	}
 
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
 		AddSource: true,
@@ -35,7 +45,7 @@ func main() {
 		logger: logger,
 	}
 	mux := app.registerRoutes()
-	err := app.serve(mux)
+	err = app.serve(mux)
 	if err != nil {
 		logger.Error(err.Error())
 		os.Exit(1)

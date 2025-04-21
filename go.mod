@@ -4,7 +4,10 @@ go 1.24.2
 
 tool honnef.co/go/tools/cmd/staticcheck
 
-require github.com/google/uuid v1.6.0
+require (
+	github.com/google/uuid v1.6.0
+	github.com/joho/godotenv v1.5.1
+)
 
 require (
 	github.com/BurntSushi/toml v1.4.1-0.20240526193622-a339e1f7089c // indirect
