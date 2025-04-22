@@ -8,9 +8,21 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"sync"
 	"syscall"
 	"time"
 )
+
+type config struct {
+	port int
+	env  string
+}
+
+type application struct {
+	config config
+	logger *slog.Logger
+	wg     sync.WaitGroup
+}
 
 func (app *application) serve(mux http.Handler) error {
 	srv := &http.Server{

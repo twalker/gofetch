@@ -1,39 +1,18 @@
 package main
 
 import (
-	"log"
 	"log/slog"
 	"os"
-	"strconv"
-	"sync"
+
+	"gofetch.timwalker.dev/internal/env"
 
 	_ "github.com/joho/godotenv/autoload"
 )
 
-type config struct {
-	port int
-	env  string
-}
-
-type application struct {
-	config config
-	logger *slog.Logger
-	wg     sync.WaitGroup
-}
-
 func main() {
-	port, err := strconv.Atoi(os.Getenv("PORT"))
-	if err != nil {
-		log.Fatalf("Error reading PORT from environment variable: %v", err)
-	}
-
-	env := os.Getenv("ENV")
-	if env == "" {
-		env = "local"
-	}
 	cfg := config{
-		port: port,
-		env:  env,
+		port: env.GetInt("PORT", 4000),
+		env:  env.GetString("ENV", "local"),
 	}
 
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
@@ -45,7 +24,7 @@ func main() {
 		logger: logger,
 	}
 	mux := app.registerRoutes()
-	err = app.serve(mux)
+	err := app.serve(mux)
 	if err != nil {
 		logger.Error(err.Error())
 		os.Exit(1)
