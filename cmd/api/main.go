@@ -1,15 +1,21 @@
 package main
 
 import (
+	"log"
 	"log/slog"
 	"os"
 
 	"gofetch.timwalker.dev/internal/env"
 
-	_ "github.com/joho/godotenv/autoload"
+	"github.com/joho/godotenv"
 )
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
 	cfg := config{
 		port: env.GetInt("PORT", 4000),
 		env:  env.GetString("ENV", "local"),
@@ -24,7 +30,7 @@ func main() {
 		logger: logger,
 	}
 	mux := app.registerRoutes()
-	err := app.serve(mux)
+	err = app.serve(mux)
 	if err != nil {
 		logger.Error(err.Error())
 		os.Exit(1)
