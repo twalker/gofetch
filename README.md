@@ -25,18 +25,22 @@ make run/api
 ## TODO:
 
 - [x] Server start with configurable port (switch to .env)
-- [x] Logger
+- [x] Structured Logger
 - [ ] Panic recovery middleware
 - [ ] CORS middleware
 - [x] Request ID middleware
+- [ ] Middleware chain
 - [ ] `GET /version` route
 - [ ] `GET/HEAD /healthz` route
 - [ ] `GET /hello-api-call` route
+- [ ] API ClientRequest module/helper
 - [ ] Handle 404
+- [ ] Json read/write helpers
 - [ ] Default to "application/json" responses
-- [ ] Standardize error responses
+- [ ] Standardize http error responses
 - [x] Add Air for hot reloading
 - [x] Add dotenv to use environment variables instead of cli opts
 - [x] Tests for middleware
 - [x] Tests for routes
 - [x] Graceful shutdown
+- [x] Make file with build, test, etc.
