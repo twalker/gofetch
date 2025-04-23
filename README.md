@@ -34,10 +34,9 @@ make run/api
 - [ ] `GET/HEAD /healthz` route
 - [ ] `GET /hello-api-call` route
 - [ ] API ClientRequest module/helper
-- [ ] Handle 404
-- [ ] Json read/write helpers
-- [ ] Default to "application/json" responses
-- [ ] Standardize http error responses
+- [x] Handle 404
+- [x] Json read/write helpers
+- [x] Standardize http error responses
 - [x] Add Air for hot reloading
 - [x] Add dotenv to use environment variables instead of cli opts
 - [x] Tests for middleware
