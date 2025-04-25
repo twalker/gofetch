@@ -10,6 +10,7 @@ Project to learn a bare bones rest api with preference to standard library.
 ```sh
 go mod tidy
 ```
+
 3. Create a `.env` file and adjust as desired:
 
 ```sh
@@ -30,10 +31,10 @@ make run/api
 - [ ] CORS middleware
 - [x] Request ID middleware
 - [ ] Middleware chain
-- [ ] `GET /version` route
-- [ ] `GET/HEAD /healthz` route
-- [ ] `GET /hello-api-call` route
-- [ ] API ClientRequest module/helper
+- [ ] `GET /version` route (YAGNI)
+- [x] `GET/HEAD /health` route
+- [x] `GET /hello-api-call` route
+- [x] API ClientRequest module/helper
 - [x] Handle 404
 - [x] Json read/write helpers
 - [x] Standardize http error responses
