@@ -11,6 +11,8 @@ import (
 	"sync"
 	"syscall"
 	"time"
+
+	"gofetch.timwalker.dev/internal/apiclient"
 )
 
 type config struct {
@@ -19,9 +21,10 @@ type config struct {
 }
 
 type application struct {
-	config config
-	logger *slog.Logger
-	wg     sync.WaitGroup
+	config    config
+	logger    *slog.Logger
+	apiClient *apiclient.APIClient
+	wg        sync.WaitGroup
 }
 
 func (app *application) serve(mux http.Handler) error {

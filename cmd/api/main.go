@@ -4,8 +4,10 @@ import (
 	"log/slog"
 	"os"
 
-	_ "github.com/joho/godotenv/autoload"
+	"gofetch.timwalker.dev/internal/apiclient"
 	"gofetch.timwalker.dev/internal/env"
+
+	_ "github.com/joho/godotenv/autoload"
 )
 
 func main() {
@@ -19,14 +21,20 @@ func main() {
 	})).With("pid", os.Getpid(), "name", "gofetch")
 	slog.SetDefault(logger)
 
+	apiClient, err := apiclient.NewClient(env.GetString("API_BASE_URL", "http://localhost:4444"), nil)
+	if err != nil {
+		logger.Error(err.Error())
+	}
+
 	app := &application{
-		config: cfg,
-		logger: logger,
+		config:    cfg,
+		logger:    logger,
+		apiClient: apiClient,
 	}
 
 	mux := app.registerRoutes()
 
-	err := app.serve(mux)
+	err = app.serve(mux)
 	if err != nil {
 		logger.Error(err.Error())
 		os.Exit(1)
