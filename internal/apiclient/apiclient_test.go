@@ -11,6 +11,8 @@ import (
 	"time"
 )
 
+/* test adapted from: https://gemini.google.com/app/6750213f3e04a7cd */
+
 // setupTestServer creates a mock HTTP server for testing.
 // It takes a handler function that defines the server's behavior.
 func setupTestServer(handler http.HandlerFunc) (*httptest.Server, *APIClient) {

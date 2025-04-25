@@ -11,7 +11,9 @@ import (
 	"time"
 )
 
-// package adapted from: https://gemini.google.com/app/6750213f3e04a7cd
+/* package adapted from: https://gemini.google.com/app/6750213f3e04a7cd */
+
+// single shared httpClient to pool tcp connections
 var httpClient = &http.Client{
 	Timeout: 30 * time.Second, // Default timeout
 }
