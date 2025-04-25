@@ -28,7 +28,7 @@ make run/api
 - [x] Server start with configurable port (switch to .env)
 - [x] Structured Logger
 - [ ] Panic recovery middleware
-- [ ] CORS middleware
+- [ ] CORS middleware (YAGNI)
 - [x] Request ID middleware
 - [ ] Middleware chain
 - [ ] `GET /version` route (YAGNI)
