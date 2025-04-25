@@ -5,6 +5,10 @@ import (
 )
 
 func (app *application) healthCheckHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodHead {
+		return
+	}
+
 	resp := map[string]string{
 		"health":        "OK",
 		"env":           app.config.env,
