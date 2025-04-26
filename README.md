@@ -20,14 +20,24 @@ cp .env.example .env
 4. Run the application
 
 ```sh
-make run/api
+make run
+```
+
+Or run with hot reloading
+```sh
+make watch
+```
+
+To list all available tasks:
+```sh
+make help
 ```
 
 ## TODO:
 
 - [x] Server start with configurable port (switch to .env)
 - [x] Structured Logger
-- [ ] Panic recovery middleware
+- [x] Panic recovery middleware
 - [ ] CORS middleware (YAGNI)
 - [x] Request ID middleware
 - [ ] Middleware chain

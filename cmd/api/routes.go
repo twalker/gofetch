@@ -15,5 +15,5 @@ func (app *application) registerRoutes() http.Handler {
 	// Unmatched route patters receive a 404
 	mux.HandleFunc("/", app.notFoundResponse)
 
-	return app.correlationIDMiddleware(mux)
+	return app.recoverPanic(app.correlationIDMiddleware(mux))
 }

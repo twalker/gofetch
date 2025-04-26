@@ -48,3 +48,27 @@ func (app *application) getCorrelationID(ctx context.Context) string {
 	}
 	return ""
 }
+
+// recoverPanic middleware recovers from panics, logs the err, and prevents
+// the server process from exiting.
+func (app *application) recoverPanic(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// The deferred function will always be run in the event of a panic
+		// as Go unwinds the stack.
+		defer func() {
+			// Use the builtin recover function to check if there has been a panic or not.
+			if err := recover(); err != nil {
+				// If there was a panic, set a "Connection: close" header on the
+				// response. This acts as a trigger to make Go's HTTP server
+				// automatically close the current connection after a response has been
+				// sent.
+				w.Header().Set("Connection", "close")
+				// The value returned by recover() has the type any, soo fmt.Errorf() is
+				// used to normalize it into an error, return a 500 and, log the error.
+				app.internalServerError(w, r, fmt.Errorf("%s", err))
+			}
+		}()
+
+		next.ServeHTTP(w, r)
+	})
+}
