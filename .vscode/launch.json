@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Gofetch",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/cmd/api",
+            "cwd": "${workspaceFolder}",
+            "stopOnEntry": false
+        },
+        {
+          "name": "Debug Gofetch Tests",
+          "type": "go",
+          "request": "launch",
+          "mode": "test",
+          "program": "${workspaceFolder}/cmd/api",
+          "cwd": "${workspaceFolder}",
+          "buildFlags": "",
+          "stopOnEntry": false,
+          "showLog": false,
+          "logOutput": "debugger"
+        },
+    ]
+}
