@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"gofetch.timwalker.dev/internal/apiclient"
+	"gofetch.timwalker.dev/internal/database"
 	"gofetch.timwalker.dev/internal/env"
 
 	_ "github.com/joho/godotenv/autoload"
@@ -30,6 +31,7 @@ func main() {
 		config:    cfg,
 		logger:    logger,
 		apiClient: apiClient,
+		db:        database.New(),
 	}
 
 	mux := app.registerRoutes()

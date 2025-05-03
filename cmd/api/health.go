@@ -9,13 +9,21 @@ func (app *application) healthCheckHandler(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	resp := map[string]string{
-		"health":        "OK",
-		"env":           app.config.env,
-		"correlationID": app.getCorrelationID(r.Context()),
+	type health struct {
+		CorrelationID        string `json:"correlationId"`
+		Env                  string `json:"env"`
+		ApplicationIsHealthy bool   `json:"appIsHealthy"`
+		DatabaseIsHealthy    bool   `json:"dbIsHealthy"`
 	}
 
-	if err := writeJSONData(w, http.StatusOK, resp); err != nil {
+	response := health{
+		CorrelationID:        app.getCorrelationID(r.Context()),
+		Env:                  app.config.env,
+		ApplicationIsHealthy: true,
+		DatabaseIsHealthy:    app.db.IsHealthy(),
+	}
+
+	if err := writeJSON(w, http.StatusOK, response); err != nil {
 		writeJSONError(w, http.StatusInternalServerError, err.Error())
 	}
 }

@@ -11,6 +11,7 @@ func (app *application) registerRoutes() http.Handler {
 	mux.HandleFunc("HEAD /health", app.healthCheckHandler)
 	mux.HandleFunc("GET /errors/{code}", app.checkErrorResponseHandler)
 	mux.HandleFunc("GET /apiclient/albums", app.getAlbumsFromApiClientHandler)
+	mux.HandleFunc("GET /counter", app.viewCounterHandler)
 	mux.HandleFunc("POST /albums", app.createAlbumHandler)
 	// Unmatched route patters receive a 404
 	mux.HandleFunc("/", app.notFoundResponse)

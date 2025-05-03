@@ -13,6 +13,7 @@ import (
 	"time"
 
 	"gofetch.timwalker.dev/internal/apiclient"
+	"gofetch.timwalker.dev/internal/database"
 )
 
 type config struct {
@@ -24,6 +25,7 @@ type application struct {
 	config    config
 	logger    *slog.Logger
 	apiClient *apiclient.APIClient
+	db        database.Service
 	wg        sync.WaitGroup
 }
 
