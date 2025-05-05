@@ -5,9 +5,10 @@ import (
 	"fmt"
 	"time"
 
-	_ "github.com/joho/godotenv/autoload"
 	"github.com/redis/go-redis/v9"
 	"gofetch.timwalker.dev/internal/env"
+
+	_ "github.com/joho/godotenv/autoload"
 )
 
 type Service interface {
