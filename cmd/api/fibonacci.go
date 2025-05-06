@@ -1,7 +1,7 @@
 package main
 
 import (
-	"errors"
+	"fmt"
 	"net/http"
 	"strconv"
 	"time"
@@ -16,6 +16,8 @@ func fibonacci(n int) int {
 	return fibonacci(n-1) + fibonacci(n-2)
 }
 
+// fibonacciHandler runs the Fibonacci sequence for the provided num route parameter.
+// It emulates a high CPU intensive routes.
 func (app *application) fibonacciHandler(w http.ResponseWriter, r *http.Request) {
 	num, err := strconv.Atoi(r.PathValue("num"))
 	if err != nil {
@@ -23,16 +25,24 @@ func (app *application) fibonacciHandler(w http.ResponseWriter, r *http.Request)
 		return
 	}
 	if num >= 50 {
-		app.badRequestResponse(w, r, errors.New("numbers larger than 50 result in timeouts"))
+		app.badRequestResponse(w, r, fmt.Errorf("numbers >= 50 result in timeouts: %d", num))
+		return
 	}
+
 	start := time.Now()
 	result := fibonacci(num)
 	end := time.Now()
 	timeToCalculate := end.Sub(start)
-	response := map[string]string{
-		"result":          strconv.Itoa(result),
-		"timeToCalculate": timeToCalculate.String(),
-		"num":             r.PathValue("num"),
+
+	response := struct {
+		Num             int
+		Result          int
+		TimeToCalculate string
+	}{
+		Num:             num,
+		Result:          result,
+		TimeToCalculate: timeToCalculate.String(),
 	}
+
 	writeJSON(w, 200, response)
 }
